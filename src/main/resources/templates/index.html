@@ -18,7 +18,10 @@
 
 			<div class="card">
 
-				<div class="card-header">Dynamic fields with Thymeleaf-AJAX</div>
+				<div class="card-header">
+					Dynamic fields with Thymeleaf-AJAX <a th:href="@{/list}"
+						class="btn btn-sm btn-primary float-right">List</a>
+				</div>
 				<div class="card-body">
 					<div class="row justify-content-center">
 						<h5 class="card-title">Personal Information</h5>
@@ -51,7 +54,16 @@
 
 
 			<div class="card">
-				<div class="card-header">Contacts</div>
+				<div class="card-header update-contacts">
+					Contacts
+
+					<button type="button" name="addContact"
+						class="btn btn-sm btn-outline-success float-right"
+						data-update-contacts-url="/addContact">
+						<i class="fas fa-plus"></i>
+					</button>
+
+				</div>
 				<div class="card-body">
 					<div class="row justify-content-center">
 						<!-- 						<h5 class="card-title">Contact Details</h5> -->
@@ -72,24 +84,20 @@
 							<button type="button" class="close" data-dismiss="alert"
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
-							</button><span><a th:href="@{/list}" class="btn btn-sm btn-primary ml-2 mr-2"><i class="fas fa-list-ol"></i> Go to Person List</a></span>
+							</button>
+							<span><a th:href="@{/list}"
+								class="btn btn-sm btn-primary ml-2 mr-2"><i
+									class="fas fa-list-ol"></i> Go to Person List</a></span>
 						</div>
 					</div>
 					<table class="table update-contacts" style="width: 100%">
-						<thead>
-							<tr>
-								<th>S.No.</th>
-								<th>Type</th>
-								<th>Contact</th>
-								<th>
-									<button type="button" name="addContact"
-										class="btn btn-sm btn-outline-success"
-										data-update-contacts-url="/addContact">
-										<i class="fas fa-plus"></i>
-									</button>
-								</th>
-							</tr>
-						</thead>
+<!-- 						<thead> -->
+<!-- 							<tr> -->
+<!-- 								<th>S.No.</th> -->
+<!-- 								<th>Type</th> -->
+<!-- 								<th>Contact</th> -->
+<!-- 							</tr> -->
+<!-- 						</thead> -->
 						<tbody id="tblContacts">
 							<tr th:fragment="contacts"
 								th:each="contact,rowStat : ${person.contactList}">
