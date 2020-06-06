@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thymeleaf.demo.model.ContactDto;
 import com.thymeleaf.demo.model.Person;
+import com.thymeleaf.demo.repository.ContactRepository;
 import com.thymeleaf.demo.repository.PersonRepository;
 import com.thymeleaf.demo.service.PersonService;
 
@@ -26,14 +29,48 @@ public class PersonController {
     @Autowired
     private PersonService personService;
     
+    @Autowired
+    ContactRepository contactRepository;
+    
     
     @Autowired
     PersonRepository personRepository;
+    
 
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("person", personService.createPerson());
         return "index";
+    }
+    
+    @GetMapping("/person/{id}")
+    public String getForm(Model model, @PathVariable(required = false, name = "id") Long id) {
+    	
+    	model.addAttribute("person", personRepository.findById(id));
+            ContactDto contactDto = new ContactDto();
+            contactDto.setContacts(contactRepository.findAll());
+            model.addAttribute("contactDto", contactDto);
+            return "index2";
+    }
+    
+    @PostMapping("/person")
+    public String edit(@Valid Person person, BindingResult bindingResult, RedirectAttributes redirAttrs, Model model){
+
+    	ContactDto contactDto = new ContactDto();
+        contactDto.setContacts(contactRepository.findAll());
+        model.addAttribute("contactDto", contactDto);
+    	
+    	
+        if(bindingResult.hasErrors()){
+        	redirAttrs.addFlashAttribute("errorMessage", "The submitted data has errors.");
+//            model.addAttribute("errorMessage", "The submitted data has errors.");
+        }else {
+            model.addAttribute("person", personService.savePerson(person));
+            redirAttrs.addFlashAttribute("successMessage", "Person saved successfully!");
+//            model.addAttribute("successMessage", "Person saved successfully!");
+        }
+
+        return "redirect:/person/" + person.getId();
     }
     
     @RequestMapping(value = { "list" }, method = RequestMethod.GET)

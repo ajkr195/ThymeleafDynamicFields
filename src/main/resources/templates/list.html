@@ -49,6 +49,10 @@
 
 									<td><div class="btn-group">
 											<a
+												th:href="@{'/person/' + ${person.id}}"
+												class="btn btn-sm btn-warning bg-orange mr-2"
+												title="Edit User. Available to Users and Super Admins only."><i
+												class="fas fa-user-edit"></i></a><a
 												th:href="@{'/personDelete/' + ${person.id}}"
 												class="btn btn-sm btn-danger bg-red mr-2 delBtn"
 												title="Delete Person."><i class="far fa-trash-alt"></i>
