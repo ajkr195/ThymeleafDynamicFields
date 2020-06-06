@@ -43,6 +43,8 @@ public class PersonController {
 		model.addAttribute("metaTitle", "All Users");
 		return "list";
 	}
+    
+    
 
     @PostMapping("/addContact")
     public String addContact(Person person){
