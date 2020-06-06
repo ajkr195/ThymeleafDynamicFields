@@ -20,7 +20,7 @@ public class Person {
     private String lastName;
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "person_id")
     private List<Contact> contactList = new ArrayList<>();
     
