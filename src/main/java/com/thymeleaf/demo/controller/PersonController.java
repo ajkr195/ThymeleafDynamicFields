@@ -26,93 +26,88 @@ import com.thymeleaf.demo.service.PersonService;
 @Controller
 public class PersonController {
 
-    @Autowired
-    private PersonService personService;
-    
-    @Autowired
-    ContactRepository contactRepository;
-    
-    
-    @Autowired
-    PersonRepository personRepository;
-    
+	@Autowired
+	private PersonService personService;
 
-    @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("person", personService.createPerson());
-        return "index";
-    }
-    
-    @GetMapping("/person/{id}")
-    public String getForm(Model model, @PathVariable(required = false, name = "id") Long id) {
-    	
-    	model.addAttribute("person", personRepository.findById(id));
-            ContactDto contactDto = new ContactDto();
-            contactDto.setContacts(contactRepository.getUserContactsByPersonId(id));
-            model.addAttribute("contactDto", contactDto);
-            return "index2";
-    }
-    
-    @PostMapping("/person")
-    public String edit(@Valid Person person, BindingResult bindingResult, RedirectAttributes redirAttrs, Model model){
+	@Autowired
+	ContactRepository contactRepository;
 
-    	ContactDto contactDto = new ContactDto();
-        contactDto.setContacts(contactRepository.findAll());
-        model.addAttribute("contactDto", contactDto);
-    	
-    	
-        if(bindingResult.hasErrors()){
-        	redirAttrs.addFlashAttribute("errorMessage", "The submitted data has errors.");
+	@Autowired
+	PersonRepository personRepository;
+
+	@GetMapping("/")
+	public String index(Model model) {
+		model.addAttribute("person", personService.createPerson());
+		return "index";
+	}
+
+	@GetMapping("/person/{id}")
+	public String getForm(Model model, @PathVariable(required = false, name = "id") Long id) {
+
+		model.addAttribute("person", personRepository.findById(id));
+		ContactDto contactDto = new ContactDto();
+		contactDto.setContacts(contactRepository.getContactsByPersonId(id));
+		model.addAttribute("contactDto", contactDto);
+		return "index2";
+	}
+
+	@PostMapping("/person")
+	public String edit(@Valid Person person, BindingResult bindingResult, RedirectAttributes redirAttrs, Model model) {
+
+		ContactDto contactDto = new ContactDto();
+		contactDto.setContacts(contactRepository.getContactsByPersonId(person.getId()));
+		model.addAttribute("contactDto", contactDto);
+
+		if (bindingResult.hasErrors()) {
+			redirAttrs.addFlashAttribute("errorMessage", "The submitted data has errors.");
 //            model.addAttribute("errorMessage", "The submitted data has errors.");
-        }else {
-            model.addAttribute("person", personService.savePerson(person));
-            redirAttrs.addFlashAttribute("successMessage", "Person saved successfully!");
+		} else {
+			model.addAttribute("person", personService.savePerson(person));
+			redirAttrs.addFlashAttribute("successMessage", "Person saved successfully!");
 //            model.addAttribute("successMessage", "Person saved successfully!");
-        }
+		}
 
-        return "redirect:/person/" + person.getId();
-    }
-    
-    @RequestMapping(value = { "list" }, method = RequestMethod.GET)
+		return "redirect:/person/" + person.getId();
+	}
+
+	@RequestMapping(value = { "list" }, method = RequestMethod.GET)
 	public String listUsers(ModelMap model) {
 		List<Person> persons = personService.findAllPersons();
 		model.addAttribute("persons", persons);
 		model.addAttribute("metaTitle", "All Users");
 		return "list";
 	}
-    
-    
 
-    @PostMapping("/addContact")
-    public String addContact(Person person){
-        personService.addContact(person);
-        return "index :: contacts"; // returning the updated section
-    }
+	@PostMapping("/addContact")
+	public String addContact(Person person) {
+		personService.addContact(person);
+		return "index :: contacts"; // returning the updated section
+	}
 
 //    @SuppressWarnings("unlikely-arg-type")
 	@PostMapping("/removeContact")
-    public String removeContact(Person person, @RequestParam("removeContact") Integer contactIndex){
+	public String removeContact(Person person, @RequestParam("removeContact") Integer contactIndex) {
 //    	person.getContactList().remove(contactIndex);
-        personService.removeContact(person, contactIndex);
-        return "index :: contacts"; // returning the updated section
-    }
+		personService.removeContact(person, contactIndex);
+		return "index :: contacts"; // returning the updated section
+	}
 
-    @PostMapping("/")
-    public String save(@Valid Person person, BindingResult bindingResult, Model model){
+	@PostMapping("/")
+	public String save(@Valid Person person, BindingResult bindingResult, Model model) {
 
-        if(bindingResult.hasErrors()){
-            model.addAttribute("errorMessage", "The submitted data has errors.");
-        }else {
-            model.addAttribute("person", personService.savePerson(person));
-            model.addAttribute("successMessage", "Person saved successfully!");
-        }
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", "The submitted data has errors.");
+		} else {
+			model.addAttribute("person", personService.savePerson(person));
+			model.addAttribute("successMessage", "Person saved successfully!");
+		}
 
-        return "index";
-    }
-    
-    @RequestMapping(value = "/personDelete/{id}", method = RequestMethod.GET)
+		return "index";
+	}
+
+	@RequestMapping(value = "/personDelete/{id}", method = RequestMethod.GET)
 	public String notesDelete(Model model, @PathVariable(required = true, name = "id") Long id) {
-    	personRepository.deleteById(id);
+		personRepository.deleteById(id);
 //			model.addAttribute("listAppUser", appUserService.findAll());
 		return "redirect:/list";
 	}

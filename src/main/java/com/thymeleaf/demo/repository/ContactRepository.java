@@ -12,6 +12,6 @@ import com.thymeleaf.demo.model.Contact;
 public interface ContactRepository extends JpaRepository <Contact, Long>{
 	
 	@Query(value="SELECT * FROM Contact WHERE person_id=:personid", nativeQuery=true)
-	List<Contact> getUserContactsByPersonId(Long personid);
+	List<Contact> getContactsByPersonId(Long personid);
 	
 }
