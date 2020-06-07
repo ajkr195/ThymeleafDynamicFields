@@ -48,7 +48,7 @@ public class PersonController {
     	
     	model.addAttribute("person", personRepository.findById(id));
             ContactDto contactDto = new ContactDto();
-            contactDto.setContacts(contactRepository.findAll());
+            contactDto.setContacts(contactRepository.getUserContactsByPersonId(id));
             model.addAttribute("contactDto", contactDto);
             return "index2";
     }
