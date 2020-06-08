@@ -40,6 +40,19 @@ public class PersonController {
 		model.addAttribute("person", personService.createPerson());
 		return "index";
 	}
+	
+	@PostMapping("/")
+	public String save(@Valid Person person, BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", "The submitted data has errors.");
+		} else {
+			model.addAttribute("person", personService.savePerson(person));
+			model.addAttribute("successMessage", "Person saved successfully!");
+		}
+
+		return "index";
+	}
 
 	@GetMapping("/person/{id}")
 	public String getForm(Model model, @PathVariable(required = false, name = "id") Long id) {
@@ -77,7 +90,7 @@ public class PersonController {
 		model.addAttribute("metaTitle", "All Users");
 		return "list";
 	}
-
+	
 	@PostMapping("/addContact")
 	public String addContact(Person person) {
 		personService.addContact(person);
@@ -92,23 +105,22 @@ public class PersonController {
 		return "index :: contacts"; // returning the updated section
 	}
 
-	@PostMapping("/")
-	public String save(@Valid Person person, BindingResult bindingResult, Model model) {
-
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("errorMessage", "The submitted data has errors.");
-		} else {
-			model.addAttribute("person", personService.savePerson(person));
-			model.addAttribute("successMessage", "Person saved successfully!");
-		}
-
-		return "index";
-	}
-
 	@RequestMapping(value = "/personDelete/{id}", method = RequestMethod.GET)
 	public String notesDelete(Model model, @PathVariable(required = true, name = "id") Long id) {
 		personRepository.deleteById(id);
 //			model.addAttribute("listAppUser", appUserService.findAll());
 		return "redirect:/list";
+	}
+	
+	@GetMapping("/search")
+	public String search(Model model) {
+		return "search";
+	}
+	
+	@RequestMapping(value = "/persons/{surname}", method = RequestMethod.GET)
+	public String showGuestList(Model model, @PathVariable("surname") String surname) {
+	    model.addAttribute("persons", personRepository.findByFirstnameIgnoreCaseContaining(surname));
+	    
+	    return "search :: resultsList";
 	}
 }

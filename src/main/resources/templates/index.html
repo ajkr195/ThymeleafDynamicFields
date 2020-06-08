@@ -12,15 +12,17 @@
 <body>
 	<div class="container">
 		<!-- 		<div class="container shadow mt-5 bg-lightpy-5"></div> -->
-		<form method="post" th:action="@{/}" th:object="${person}" class="mb-3">
+		<form method="post" th:action="@{/}" th:object="${person}"
+			class="mb-3">
 			<input type="hidden" th:field="${person.id}">
 
 
 			<div class="card">
 
 				<div class="card-header">
-					Dynamic fields with Thymeleaf-AJAX <a th:href="@{/list}"
-						class="btn btn-sm btn-primary float-right">List</a>
+					Dynamic fields with Thymeleaf-AJAX <a th:href="@{/search}"
+						class="btn btn-sm btn-secondary float-right mr-3">Search</a><a th:href="@{/list}"
+						class="btn btn-sm btn-primary float-right mr-3">List</a>
 				</div>
 				<div class="card-body">
 					<div class="row justify-content-center">
@@ -91,13 +93,13 @@
 						</div>
 					</div>
 					<table class="table update-contacts" style="width: 100%">
-<!-- 						<thead> -->
-<!-- 							<tr> -->
-<!-- 								<th>S.No.</th> -->
-<!-- 								<th>Type</th> -->
-<!-- 								<th>Contact</th> -->
-<!-- 							</tr> -->
-<!-- 						</thead> -->
+						<!-- 						<thead> -->
+						<!-- 							<tr> -->
+						<!-- 								<th>#</th> -->
+						<!-- 								<th>Type</th> -->
+						<!-- 								<th>Contact</th> -->
+						<!-- 							</tr> -->
+						<!-- 						</thead> -->
 						<tbody id="tblContacts">
 							<tr th:fragment="contacts"
 								th:each="contact,rowStat : ${person.contactList}">
@@ -130,8 +132,7 @@
 								<td>
 									<div class="btn-group">
 										<button type="button" name="removeContact"
-											th:value="${rowStat.index}"
-											class="btn btn-sm btn-danger"
+											th:value="${rowStat.index}" class="btn btn-sm btn-danger"
 											data-update-contacts-url="/removeContact">
 											<i class="fas fa-trash"></i>
 										</button>
@@ -147,9 +148,10 @@
 			<button type="submit" class="btn btn-primary btn-block">Submit
 				form</button>
 		</form>
+
+
+
 	</div>
-
-
 
 	<script type="text/javascript"
 		th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
@@ -157,5 +159,6 @@
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/scripts.js}"></script>
+
 </body>
 </html>
