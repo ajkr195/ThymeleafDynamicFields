@@ -1,6 +1,10 @@
 # ThymeleafDynamicFields
 ThymeleafDynamicFields
 
+1. Thymeleaf ajax table fragment
+2. Spring Data one to many relationship
+3. Thymeleaf dynamic form and addition of Child Entities dynamically.
+
 
 <h4> screenshot </h4>
 
