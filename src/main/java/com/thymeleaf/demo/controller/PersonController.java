@@ -99,7 +99,7 @@ public class PersonController {
 
 //    @SuppressWarnings("unlikely-arg-type")
 	@PostMapping("/removeContact")
-	public String removeContact(Person person, @RequestParam("removeContact") Integer contactIndex) {
+	public String removeContact(Person person, @RequestParam("removeDynamicRow") Integer contactIndex) {
 //    	person.getContactList().remove(contactIndex);
 		personService.removeContact(person, contactIndex);
 		return "index :: contacts"; // returning the updated section

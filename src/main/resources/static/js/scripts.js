@@ -1,18 +1,18 @@
 $(document).ready(function () {
 
-    // Invoke the corresponding URL to update the contacts section using Ajax
-    $('.update-contacts').on('click', 'button[data-update-contacts-url]', function () {
-        let url = $(this).data('update-contacts-url');
+    // Invoke the corresponding URL to update the dynamic fields section using Ajax
+    $('.dynamic-update-rows').on('click', 'button[data-dynamic-update-rows-url]', function () {
+        let url = $(this).data('dynamic-update-rows-url');
 
-        // adding the row index, needed when deleting a contact
+        // adding the row index, needed when deleting a dynamic row
         let formData = $('form').serializeArray();
         let param = {};
         param["name"] = $(this).attr('name');
         param["value"] = $(this).val();
         formData.push(param);
 
-        // updating the contact section
-        $('#tblContacts').load(url, formData);
+        // updating the dynamic section
+        $('#dynamicTableContents').load(url, formData);
     });
 
     // autodismiss alerts

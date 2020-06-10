@@ -56,12 +56,12 @@
 
 
 			<div class="card">
-				<div class="card-header update-contacts">
+				<div class="card-header dynamic-update-rows">
 					Contacts
 
 					<button type="button" name="addContact"
 						class="btn btn-sm btn-success float-right"
-						data-update-contacts-url="/addContact">
+						data-dynamic-update-rows-url="/addContact">
 						<i class="fas fa-plus"></i>
 					</button>
 
@@ -92,7 +92,7 @@
 									class="fas fa-list-ol"></i> Go to Person List</a></span>
 						</div>
 					</div>
-					<table class="table update-contacts" style="width: 100%">
+					<table class="table dynamic-update-rows" style="width: 100%">
 						<!-- 						<thead> -->
 						<!-- 							<tr> -->
 						<!-- 								<th>#</th> -->
@@ -100,7 +100,7 @@
 						<!-- 								<th>Contact</th> -->
 						<!-- 							</tr> -->
 						<!-- 						</thead> -->
-						<tbody id="tblContacts">
+						<tbody id="dynamicTableContents">
 							<tr th:fragment="contacts"
 								th:each="contact,rowStat : ${person.contactList}">
 								<td th:text="${rowStat.count}">1</td>
@@ -131,9 +131,9 @@
 								</td>
 								<td>
 									<div class="btn-group">
-										<button type="button" name="removeContact"
+										<button type="button" name="removeDynamicRow"
 											th:value="${rowStat.index}" class="btn btn-sm btn-danger"
-											data-update-contacts-url="/removeContact">
+											data-dynamic-update-rows-url="/removeContact">
 											<i class="fas fa-trash"></i>
 										</button>
 									</div>
