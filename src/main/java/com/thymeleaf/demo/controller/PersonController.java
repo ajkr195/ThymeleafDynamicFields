@@ -123,4 +123,14 @@ public class PersonController {
 	    
 	    return "search :: resultsList";
 	}
+	
+	@GetMapping("/tabs")
+	public String tabs(Model model) {
+		return "tabs";
+	}
+	
+	@GetMapping("/progress")
+	public String progress(Model model) {
+		return "progress";
+	}
 }

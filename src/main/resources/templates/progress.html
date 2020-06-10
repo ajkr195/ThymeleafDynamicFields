@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Thymeleaf dynamic fields with ajax</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<style>
+ol.progtrckr {
+	display: table;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	table-layout: fixed;
+	width: 100%;
+}
+
+ol.progtrckr li {
+	display: table-cell;
+	text-align: center;
+	line-height: 3em;
+}
+
+
+ol.progtrckr li.progtrckr-done {
+	color: black;
+	border-bottom: 4px solid #00cc00;
+}
+
+ol.progtrckr li.progtrckr-todo {
+	color: red;
+	border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li:after {
+	content: "\00a0\00a0";
+}
+
+ol.progtrckr li:before {
+	position: relative;
+	bottom: -2.5em;
+	float: left;
+	left: 50%;
+	line-height: 1em;
+}
+
+ol.progtrckr li.progtrckr-done:before {
+	content: "\2713";
+	color: white;
+	background-color: #00cc00;
+	height: 1.2em;
+	width: 1.2em;
+	line-height: 1.2em;
+	border: none;
+	border-radius: 1.2em;
+}
+
+ol.progtrckr li.progtrckr-todo:before {
+	content: "\039F";
+	color: silver;
+	background-color: white;
+	font-size: 1.5em;
+	bottom: -1.6em;
+}
+</style>
+</head>
+<body>
+	<div class="container mt-5 mb-5">
+
+		<div class="card">
+			<div class="card-header">Progress Indicators</div>
+			<div class="card-body">
+				<h5 class="card-title">Steps</h5>
+				
+				<ol class="progtrckr mb-4" data-progtrckr-steps="5">
+					<li class="progtrckr-done">Order Received</li>
+					<li class="progtrckr-done">Packaging</li>
+					<li class="progtrckr-done">Final Review</li>
+					<li class="progtrckr-todo">Pickup Created</li>
+					<li class="progtrckr-todo">Shipped</li>
+				</ol>
+				<p class="card-text">With supporting text below as a natural
+					lead-in to additional content.</p>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
