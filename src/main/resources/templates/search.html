@@ -75,12 +75,14 @@
 										<table
 											class="table table-condensed table-condensed-sm table-bordered">
 											<tr>
-												<th>Contact-Id</th>
+												<th>Id</th>
+												<th>Seq#</th>
 												<th>Contact Type</th>
 												<th>Contact Name</th>
 											</tr>
 											<tr th:each="contact : ${person.contactList}">
 												<td th:text="${contact.id}">id</td>
+												<td th:text="${contact.sequenceNumber}">SequenceNumber</td>
 												<td th:text="${contact.contactType}">type</td>
 												<td th:text="${contact.contactName}">name</td>
 												<!--<p th:text="|${contact.id}  ${contact.contactType} ${contact.contactName} |">details/p> -->

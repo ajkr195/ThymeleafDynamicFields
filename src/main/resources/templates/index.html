@@ -13,7 +13,7 @@
 	<div class="container">
 		<!-- 		<div class="container shadow mt-5 bg-lightpy-5"></div> -->
 		<form method="post" th:action="@{/}" th:object="${person}"
-			class="mb-3">
+			name="personContactForm" id="personContactForm" class="mb-3">
 			<input type="hidden" th:field="${person.id}">
 
 
@@ -67,31 +67,7 @@
 
 				</div>
 				<div class="card-body">
-					<div class="row justify-content-center">
-						<!-- 						<h5 class="card-title">Contact Details</h5> -->
-						<div th:if="${errorMessage}"
-							class="alert alert-danger alert-dismissible fade show"
-							role="alert">
-							<strong>Error:</strong> <span th:text="${errorMessage}">Error</span>
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
 
-						<div th:if="${successMessage}"
-							class="alert alert-success alert-dismissible fade show"
-							role="alert">
-							<strong>Success:</strong> <span th:text="${successMessage}">Success</span>
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<span><a th:href="@{/list}"
-								class="btn btn-sm btn-primary ml-2 mr-2"><i
-									class="fas fa-list-ol"></i> Go to Person List</a></span>
-						</div>
-					</div>
 					<table class="table dynamic-update-rows" style="width: 100%">
 						<!-- 						<thead> -->
 						<!-- 							<tr> -->
@@ -107,6 +83,7 @@
 								<td><input type="hidden"
 									th:field="${person.contactList[__${rowStat.index}__].id}">
 									<select class="form-control form-control-sm"
+									th:name="${person.contactList[__${rowStat.index}__].contactType}"
 									th:field="${person.contactList[__${rowStat.index}__].contactType}"
 									th:errorclass="is-invalid">
 										<option selected="selected" readonly value="">Select
@@ -141,23 +118,83 @@
 							</tr>
 						</tbody>
 					</table>
+
 				</div>
 
 			</div>
 
 			<button type="submit" class="btn btn-primary btn-block">Submit
 				form</button>
+			<hr />
+			<br />
+			<div class="row justify-content-center">
+				<!-- 						<h5 class="card-title">Contact Details</h5> -->
+				<div th:if="${errorMessage}"
+					class="alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Error:</strong> <span th:text="${errorMessage}">Error</span>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div th:if="${successMessage}"
+					class="alert alert-success alert-dismissible fade show"
+					role="alert">
+					<strong>Success:</strong> <span th:text="${successMessage}">Success</span>
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<span><a th:href="@{/list}"
+						class="btn btn-sm btn-primary ml-2 mr-2"><i
+							class="fas fa-list-ol"></i> Go to Person List</a></span>
+				</div>
+
+				<div id="summary"></div>
+			</div>
 		</form>
 
 
 	</div>
 
 	<script type="text/javascript"
-		th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-validation/jquery.validate.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/scripts.js}"></script>
+	<script>
+		$(document).ready(function() {
+
+			$("#personContactForm").validate({focusCleanup: true, errorClass: "invalid",
+				  showErrors: function(errorMap, errorList) {
+					    $("#summary").html("Your form contains "
+					      + this.numberOfInvalids()
+					      + " errors, please fix them before submit.");
+					    this.defaultShowErrors();
+					  }
+					});
+
+			//$("input[name^='contactList']").each(function() {
+			$("input[name$='contactName']").each(function() {
+				$(this).rules('add', {
+					required : true,
+					rangelength : [ 10, 40 ]
+				});
+			});
+			
+			$("select[name$='contactType']").each(function() {
+				$(this).rules('add', {
+					required : true
+				});
+			});
+			
+
+		});
+	</script>
 
 </body>
 </html>

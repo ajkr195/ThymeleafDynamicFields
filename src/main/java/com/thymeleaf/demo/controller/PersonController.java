@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thymeleaf.demo.model.Contact;
 import com.thymeleaf.demo.model.ContactDto;
 import com.thymeleaf.demo.model.Person;
 import com.thymeleaf.demo.repository.ContactRepository;
@@ -43,10 +44,14 @@ public class PersonController {
 	
 	@PostMapping("/")
 	public String save(@Valid Person person, BindingResult bindingResult, Model model) {
-
+		int i=1;
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "The submitted data has errors.");
 		} else {
+			for (Contact cnct : person.getContactList()) {
+				cnct.setSequenceNumber(i);
+				i++;
+			}
 			model.addAttribute("person", personService.savePerson(person));
 			model.addAttribute("successMessage", "Person saved successfully!");
 		}
@@ -66,7 +71,7 @@ public class PersonController {
 
 	@PostMapping("/person")
 	public String edit(@Valid Person person, BindingResult bindingResult, RedirectAttributes redirAttrs, Model model) {
-
+		int i=1;
 		ContactDto contactDto = new ContactDto();
 		contactDto.setContacts(contactRepository.getContactsByPersonId(person.getId()));
 		model.addAttribute("contactDto", contactDto);
@@ -75,6 +80,10 @@ public class PersonController {
 			redirAttrs.addFlashAttribute("errorMessage", "The submitted data has errors.");
 //            model.addAttribute("errorMessage", "The submitted data has errors.");
 		} else {
+			for (Contact cnct : person.getContactList()) {
+				cnct.setSequenceNumber(i);
+				i++;
+			}
 			model.addAttribute("person", personService.savePerson(person));
 			redirAttrs.addFlashAttribute("successMessage", "Person saved successfully!");
 //            model.addAttribute("successMessage", "Person saved successfully!");

@@ -1,7 +1,11 @@
 package com.thymeleaf.demo.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Contact {
@@ -15,8 +19,19 @@ public class Contact {
 
     @NotBlank (message = "Contact detail can not be empty")
     private String contactName;
+    
+//    @NotNull (message = "sequenceNumber detail can not be empty")
+    private Integer sequenceNumber;
 
-    public Long getId() {
+    public Integer getSequenceNumber() {
+		return sequenceNumber;
+	}
+
+	public void setSequenceNumber(Integer sequenceNumber) {
+		this.sequenceNumber = sequenceNumber;
+	}
+
+	public Long getId() {
         return id;
     }
 
