@@ -42,6 +42,8 @@ public class PersonController {
 		return "index";
 	}
 	
+	
+	
 	@PostMapping("/")
 	public String save(@Valid Person person, BindingResult bindingResult, Model model) {
 		int i=1;
@@ -141,5 +143,10 @@ public class PersonController {
 	@GetMapping("/progress")
 	public String progress(Model model) {
 		return "progress";
+	}
+	
+	@GetMapping("/jquery")
+	public String jquery(Model model) {
+		return "jquery";
 	}
 }
