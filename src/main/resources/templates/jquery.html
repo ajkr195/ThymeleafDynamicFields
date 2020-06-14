@@ -122,6 +122,47 @@
 	<br />
 	<br />
 	<br />
+	
+	
+	
+	<form action="#" method="post">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+    </div>
+    <input name="input1" type="text" value="Hello World" /> <input
+				name="input2" type="text" value="World" /> <select name="product"
+				size="5" multiple="multiple">
+				<option value="DrpDownValue1" selected="selected">1</option>
+				<option value="DrpDownValue2">2</option>
+				<option value="DrpDownValue3" selected="selected">3</option>
+				<option value="DrpDownValue4" selected="selected">4</option>
+				<option value="DrpDownValue5" selected="selected">5</option>
+				
+				<input type="checkbox" name="check" value="check1"
+				id="ch1"> <label for="ch1">check1</label> <input
+				type="checkbox" name="check" value="check2" checked="checked"
+				id="ch2"> <label for="ch2">check2</label> <br> <input
+				type="radio" name="radio" value="radio1" checked="checked" id="r1">
+			<label for="r1">radio1</label> <input type="radio" name="radio"
+				value="radio2" id="r2"> <label for="r2">radio2</label> <br>
+    <p>
+        <input type="submit" value="Send" />
+    </p>
+</form>
+
+
+	<br />
+	<br />
+	<br />
 	<script type="text/javascript"
 		th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript"
@@ -237,6 +278,47 @@ $(document).ready(function() {
         return false;
     });
 });
+
+</script>
+
+<script>
+
+(function ($) {
+    $.fn.serializeFormJSON = function () {
+
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+})(jQuery);
+
+$('form').submit(function (e) {
+    e.preventDefault();
+    var data = $(this).serializeFormJSON();
+    console.log(data);
+    
+    var json = JSON.stringify(data);
+    console.log(json);
+	  alert(json);
+    
+    
+    /* Object
+        email: "value"
+        name: "value"
+        password: "value"
+     */
+});
+
 
 </script>
 
