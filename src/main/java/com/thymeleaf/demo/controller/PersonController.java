@@ -149,4 +149,8 @@ public class PersonController {
 	public String jquery(Model model) {
 		return "jquery";
 	}
+	@GetMapping("/jquery2")
+	public String jquery2(Model model) {
+		return "jquery2";
+	}
 }
